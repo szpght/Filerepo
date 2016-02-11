@@ -1,0 +1,27 @@
+﻿@using FileRepo.Modules
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/layout.cshtml";
+}
+<table class="table">
+    <tr>
+        <th>File name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Added on</th>
+        <td>@Model.DateAdded</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Notes</th>
+        <td>@Model.Notes</td>
+    </tr>
+</table>
+<div class="btn-group">
+    <a href="/repo/file/@Model.Id/edit" class="btn btn-default">Save</a>
+    <a href="/repo/file/@Model.Id" class="btn btn-default">Cancel</a>
+</div>

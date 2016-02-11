@@ -1,0 +1,32 @@
+﻿@using FileRepo.Model
+@{
+    Layout = "Views/layout.cshtml";
+}
+
+@foreach (Term term in Model)
+{
+    <h3>Semestr @term.TermNumber</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Przedmiot</th>
+                    <th>Pliki</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Subject subject in term.Subjects)
+                {
+                    @{
+                        var requestUrl = Request.Url.ToString();
+                        var url = requestUrl.TrimEnd('/') + "/subject/" + subject.Id;
+                    }
+                    <tr>
+                        <td>@subject.Name</td>
+                        <td>0</td>
+                    <td><a href="@url" class="btn btn-default">Wejdź</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}

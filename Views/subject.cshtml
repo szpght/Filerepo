@@ -1,0 +1,32 @@
+﻿@using FileRepo.Model
+@{
+    Layout = "Views/layout.cshtml";
+}
+<a href="/repo" class="btn btn-default">Back</a>
+<table class="table" style="vertical-align: middle;">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Dodany</th>
+            <th>Przez</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(Item item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.DateAdded</td>
+            <td><a href="@item.User.FbProfileURL"><img src="@item.User.FbPictureURL" /></a></td>
+            <td class="btn-group">
+                <a href="/repo/file/@item.Id" class="btn btn-default btn-xs">Szczegóły</a>
+                <a href="/repo/file/@item.Id/download" class="btn btn-default btn-xs">Pobierz</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a href="/repo" class="btn btn-default">Back</a>
