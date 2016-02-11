@@ -11,43 +11,41 @@ using SimpleAuthentication.Core;
 
 namespace FileRepo.Auth
 {
-    class UserMapper : IUserMapper
+    public class UserMapper : IUserMapper
     {
+        private RepoContext db;
+
+        public UserMapper(RepoContext db)
+        {
+            this.db = db;
+        }
+
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            using (var db = new RepoContext())
-            {
-                var user = from u in db.Users
-                           where u.Guid == identifier
-                           select u;
-                if (user.Any())
-                    return user.Single();
-                return null;
-            }
+            var user = from u in db.Users
+                        where u.Guid == identifier
+                        select u;
+            if (user.Any())
+                return user.Single();
+            return null;
         }
 
         public User GetUserFromFbId(string fbId)
         {
-            using (var db = new RepoContext())
-            {
-                var user = from u in db.Users
-                           where u.UserName == fbId
-                           select u;
-                if (user.Any())
-                    return user.Single();
-                return null;
-            }
+            var user = from u in db.Users
+                        where u.UserName == fbId
+                        select u;
+            if (user.Any())
+                return user.Single();
+            return null;
         }
 
         public User RegisterUser(UserInformation info)
         {
-            using (var db = new RepoContext())
-            {
-                var user = new User(info.Id, info.Name);
-                db.Users.Add(user);
-                db.SaveChanges();
-                return user;
-            }
+            var user = new User(info.Id, info.Name);
+            db.Users.Add(user);
+            db.SaveChanges();
+            return user;
         }
     }
 }

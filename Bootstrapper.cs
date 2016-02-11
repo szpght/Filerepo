@@ -25,7 +25,6 @@ namespace FileRepo
             var facebookProvider = new FacebookProvider(new ProviderParams { PublicApiKey = Config.FacebookAppId, SecretApiKey = Config.FacebookAppSecret });
             var authenticationProviderFactory = new AuthenticationProviderFactory();
             authenticationProviderFactory.AddProvider(facebookProvider);
-            container.Register<IAuthenticationCallbackProvider>(new AuthenticationCallbackProvider());
         }
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)

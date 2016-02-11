@@ -12,10 +12,16 @@ namespace FileRepo.Auth
 {
     public class AuthenticationCallbackProvider : IAuthenticationCallbackProvider
     {
+        private UserMapper userMapper;
+
+        public AuthenticationCallbackProvider(UserMapper userMapper)
+        {
+            this.userMapper = userMapper;
+        }
+
         public dynamic Process(NancyModule nancyModule, AuthenticateCallbackData model)
         {
             var info = model.AuthenticatedClient.UserInformation;
-            var userMapper = new UserMapper();
             var user = userMapper.GetUserFromFbId(info.Id);
             if (user == null)
                 user = userMapper.RegisterUser(info);

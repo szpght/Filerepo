@@ -13,13 +13,12 @@ namespace FileRepo.Modules
 {
     public class RepoModule : NancyModule
     {
-        public RepoModule() : base("/repo")
+        public RepoModule(RepoContext db) : base("/repo")
         {
             //this.RequiresClaims("user");
             Get["/"] = parameters =>
             {
                 ViewBag.Title = "test";
-                var db = new RepoContext();
                 var model = db.Terms
                     .Include(x => x.Subjects)
                     .OrderByDescending(x => x.TermNumber);
@@ -28,7 +27,6 @@ namespace FileRepo.Modules
 
             Get["/subject/{subject:int}"] = parameters =>
             {
-                var db = new RepoContext();
                 int subject = parameters.subject;
                 var model = db.Items
                     .Include(x => x.User)
@@ -38,7 +36,6 @@ namespace FileRepo.Modules
 
             Get["/file/{file:int}"] = parameters =>
             {
-                var db = new RepoContext();
                 int file = parameters.file;
                 var model = db.Items
                     .Include(x => x.User)
@@ -49,7 +46,6 @@ namespace FileRepo.Modules
 
             Get["/file/{file:int}/edit"] = parameters =>
             {
-                var db = new RepoContext();
                 int file = parameters.file;
                 var model = db.Items
                     .Single(x => x.Id == file);
