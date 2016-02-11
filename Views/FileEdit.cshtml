@@ -3,25 +3,44 @@
 @{
     Layout = "Views/layout.cshtml";
 }
-<table class="table">
-    <tr>
-        <th>File name</th>
-        <td>@Model.Name</td>
-    </tr>
-    <tr>
-        <th>Added on</th>
-        <td>@Model.DateAdded</td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>@Model.Description</td>
-    </tr>
-    <tr>
-        <th>Notes</th>
-        <td>@Model.Notes</td>
-    </tr>
-</table>
-<div class="btn-group">
-    <a href="/repo/file/@Model.Id/edit" class="btn btn-default">Save</a>
-    <a href="/repo/file/@Model.Id" class="btn btn-default">Cancel</a>
-</div>
+<form method="post">
+    <table class="table">
+        <tr>
+            <th>File name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Subject</th>
+            <td>@Model.Subject.Name</td>
+        </tr>
+        <tr>
+            <th>Added on</th>
+            <td>@Model.DateAdded</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>
+                <textarea name="Description" class="form-control">@Model.Description</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Notes</th>
+            <td>
+                <textarea name="Notes" class="form-control">@Model.Notes</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>
+                <a href="@Model.User.FbProfileURL">
+                    <img src="@Model.User.FbPictureURL" />
+                    @Model.User.Name
+                </a>
+            </td>
+        </tr>
+    </table>
+    <div class="btn-group">
+        <input type="submit" value="Save" class="btn btn-default"/>
+        <a href="/repo/subject/@Model.SubjectId" class="btn btn-default">Back</a>
+    </div>
+</form>

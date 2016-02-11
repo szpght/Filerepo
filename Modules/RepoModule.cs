@@ -8,13 +8,18 @@ using Nancy;
 using Nancy.Security;
 using Microsoft.Data.Entity;
 using Nancy.Bootstrapper;
+using Nancy.ModelBinding;
 
 namespace FileRepo.Modules
 {
     public class RepoModule : NancyModule
     {
+        private readonly RepoContext db;
+
         public RepoModule(RepoContext db) : base("/repo")
         {
+            this.db = db;
+
             //this.RequiresClaims("user");
             Get["/"] = parameters =>
             {
@@ -34,23 +39,36 @@ namespace FileRepo.Modules
                 return View["subject", model];
             };
 
-            Get["/file/{file:int}"] = parameters =>
+            Get["/file/{id:int}"] = parameters =>
             {
-                int file = parameters.file;
-                var model = db.Items
-                    .Include(x => x.User)
-                    .Include(x => x.Subject)
-                    .Single(x => x.Id == file);
+                var model = GetItemFromId(parameters.id);
                 return View["FileDetails", model];
             };
 
-            Get["/file/{file:int}/edit"] = parameters =>
+            Get["/file/{id:int}/edit"] = parameters =>
             {
-                int file = parameters.file;
-                var model = db.Items
-                    .Single(x => x.Id == file);
+                var model = GetItemFromId(parameters.id);
                 return View["FileEdit", model];
             };
+            
+            Post["/file/{id:int}/edit"] = parameters =>
+            {
+                Item file = GetItemFromId(parameters.id);
+                this.BindTo(file);
+                db.Items.Update(file);
+                db.SaveChanges();
+                string path = string.Format("/repo/file/{0}", parameters.id);
+                return Response.AsRedirect(path);
+            };
+        }
+
+        public Item GetItemFromId(int id)
+        {
+            var file = db.Items
+                .Include(x => x.User)
+                .Include(x => x.Subject)
+                .Single(x => x.Id == id);
+            return file;
         }
 
         public static bool UserAllowedToEdit(NancyContext context, Item file)
