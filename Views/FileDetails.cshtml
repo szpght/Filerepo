@@ -1,4 +1,5 @@
-﻿@using FileRepo.Modules
+﻿@using System.Linq
+@using FileRepo.Modules
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 @{
     Layout = "Views/layout.cshtml";
@@ -39,6 +40,9 @@
     @if (RepoModule.UserAllowedToEdit(Context, Model))
     {
         <a href="/repo/file/@Model.Id/edit" class="btn btn-default">Edit</a>
+    }
+    @if (Context.CurrentUser.Claims.Contains("admin"))
+    {
         <a href="/repo/file/@Model.Id/delete" class="btn btn-default">Delete</a>
     }
     <a href="/repo/subject/@Model.SubjectId" class="btn btn-default">Back</a>
