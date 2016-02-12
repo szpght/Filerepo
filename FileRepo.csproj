@@ -174,9 +174,10 @@
     <Compile Include="Auth\UserMapper.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Migrations\20160210154912_test1.cs" />
-    <Compile Include="Migrations\20160210154912_test1.designer.cs">
-      <DependentUpon>20160210154912_test1.cs</DependentUpon>
+    <Compile Include="DebugDatabasePopulator.cs" />
+    <Compile Include="Migrations\20160212161838_test1.cs" />
+    <Compile Include="Migrations\20160212161838_test1.designer.cs">
+      <DependentUpon>20160212161838_test1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\RepoContextModelSnapshot.cs" />
     <Compile Include="Model\Item.cs" />
