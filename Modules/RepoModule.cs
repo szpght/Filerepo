@@ -54,7 +54,9 @@ namespace FileRepo.Modules
             Post["/file/{id:int}/edit"] = parameters =>
             {
                 Item file = GetItemFromId(parameters.id);
-                this.BindTo(file);
+                Item newFile = this.Bind();
+                file.Description = newFile.Description;
+                file.Notes = newFile.Notes;
                 db.Items.Update(file);
                 db.SaveChanges();
                 string path = string.Format("/repo/file/{0}", parameters.id);
