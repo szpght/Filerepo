@@ -20,11 +20,8 @@ namespace FileRepo
                 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
+            // can be replaced by manual registration to speed up boot
             base.ConfigureApplicationContainer(container);
-
-            var facebookProvider = new FacebookProvider(new ProviderParams { PublicApiKey = Config.FacebookAppId, SecretApiKey = Config.FacebookAppSecret });
-            var authenticationProviderFactory = new AuthenticationProviderFactory();
-            authenticationProviderFactory.AddProvider(facebookProvider);
         }
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
@@ -32,6 +29,9 @@ namespace FileRepo
             base.ApplicationStartup(container, pipelines);
 
             // simple authentication configuration
+            var facebookProvider = new FacebookProvider(new ProviderParams { PublicApiKey = Config.FacebookAppId, SecretApiKey = Config.FacebookAppSecret });
+            var authenticationProviderFactory = new AuthenticationProviderFactory();
+            authenticationProviderFactory.AddProvider(facebookProvider);
             var formsAuthConfiguration =
                 new FormsAuthenticationConfiguration()
                 {
