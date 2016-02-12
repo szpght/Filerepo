@@ -6,7 +6,7 @@
 }
 @Html.Partial("Views/FileDetailsPartial.cshtml", Model)
 <div class="btn-group">
-    <a href="/repo/file/@Model.Id/download" class="btn btn-default">Download</a>
+    <a href="/repo/file/@Model.Id/download/@Model.Name" class="btn btn-default">Download</a>
     @if (RepoModule.UserAllowedToEdit(Context, Model))
     {
         <a href="/repo/file/@Model.Id/edit" class="btn btn-default">Edit</a>

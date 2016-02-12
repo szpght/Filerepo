@@ -108,11 +108,11 @@ namespace FileRepo.Modules
                 return Response.AsRedirect(path);
             };
 
-            Get["/file/{id:int}/download"] = parameters =>
+            Get["/file/{id:int}/download/{junk?}"] = parameters =>
             {
                 int id = parameters.id;
                 Item file = db.Items.Single(x => x.Id == id);
-                return Response.AsFile(file.StoredName);
+                return Response.AsFile(Path.Combine(Config.FileUploadDirectory, file.StoredName));
             };
         }
 

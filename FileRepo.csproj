@@ -194,7 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.png" />
-    <Content Include="TODO.txt" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
