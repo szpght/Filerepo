@@ -39,14 +39,16 @@ namespace FileRepo.Modules
 
             Get["/subject/{subject:int}"] = parameters =>
             {
-                int subject = parameters.subject;
+                int subjectId = parameters.subject;
+                var subject = db.Subjects
+                    .Single(x => x.Id == subjectId);
                 var items = db.Items
                     .Include(x => x.User)
-                    .Where(x => x.SubjectId == subject)
+                    .Where(x => x.SubjectId == subjectId)
                     .ToList();
                 var viewModel = new SubjectViewModel
                 {
-                    SubjectId = subject,
+                    Subject = subject,
                     Items = items
                 };
                 return View["subject", viewModel];

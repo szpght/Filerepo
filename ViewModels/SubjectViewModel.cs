@@ -9,7 +9,7 @@ namespace FileRepo.ViewModels
 {
     public class SubjectViewModel
     {
-        public int SubjectId { get; set; }
+        public Subject Subject { get; set; }
         public List<Item> Items { get; set; }
     }
 }
