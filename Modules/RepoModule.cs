@@ -60,6 +60,21 @@ namespace FileRepo.Modules
                 string path = string.Format("/repo/file/{0}", parameters.id);
                 return Response.AsRedirect(path);
             };
+
+            Get["/file/{id:int}/delete"] = parameters =>
+            {
+                var model = GetItemFromId(parameters.id);
+                return View["DeleteFile", model];
+            };
+
+            Post["/file/{id:int}/delete"] = parameters =>
+            {
+                Item file = GetItemFromId(parameters.id);
+                db.Remove(file);
+                db.SaveChanges();
+                string path = string.Format("/repo/subject/{0}", file.SubjectId);
+                return Response.AsRedirect(path);
+            };
         }
 
         public Item GetItemFromId(int id)

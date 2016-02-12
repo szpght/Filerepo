@@ -4,37 +4,7 @@
 @{
     Layout = "Views/layout.cshtml";
 }
-<table class="table">
-    <tr>
-        <th>File name</th>
-        <td>@Model.Name</td>
-    </tr>
-    <tr>
-        <th>Subject</th>
-        <td>@Model.Subject.Name</td>
-    </tr>
-    <tr>
-        <th>Added on</th>
-        <td>@Model.DateAdded</td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>@Model.Description</td>
-    </tr>
-    <tr>
-        <th>Notes</th>
-        <td>@Model.Notes</td>
-    </tr>
-    <tr>
-        <th>Author</th>
-        <td>
-            <a href="@Model.User.FbProfileURL">
-                <img src="@Model.User.FbPictureURL"/>
-                @Model.User.Name
-            </a>
-        </td>
-    </tr>
-</table>
+@Html.Partial("Views/FileDetailsPartial.cshtml", Model)
 <div class="btn-group">
     <a href="/repo/file/@Model.Id/download" class="btn btn-default">Download</a>
     @if (RepoModule.UserAllowedToEdit(Context, Model))

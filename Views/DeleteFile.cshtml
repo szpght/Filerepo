@@ -1,0 +1,12 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    ViewBag.Title = "Delete confirmation";
+    Layout = "layout";
+}
+
+@Html.Partial("Views/FileDetailsPartial.cshtml", Model)
+Confirm deleting file<br/>
+<form method="post" class="btn-group">
+    <input type="submit" value="Delete" class="btn btn-default"/>
+    <a href="/repo/file/@Model.Id" class="btn btn-default">Cancel</a>
+</form>
