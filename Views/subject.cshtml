@@ -2,7 +2,10 @@
 @{
     Layout = "Views/layout.cshtml";
 }
-<a href="/repo" class="btn btn-default">Back</a>
+<div class="btn-group">
+    <a href="/repo/subject/@Model.SubjectId/upload" class="btn btn-default">Upload file</a>
+    <a href="/repo" class="btn btn-default">Back</a>
+</div>
 <table class="table" style="vertical-align: middle;">
     <thead>
         <tr>
@@ -14,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-    @foreach(Item item in Model)
+    @foreach(Item item in Model.Items)
     {
         <tr>
             <td>@item.Name</td>
@@ -29,4 +32,7 @@
     }
     </tbody>
 </table>
-<a href="/repo" class="btn btn-default">Back</a>
+<div class="btn-group">
+    <a href="/repo/subject/@Model.SubjectId/upload" class="btn btn-default">Upload file</a>
+    <a href="/repo" class="btn btn-default">Back</a>
+</div>

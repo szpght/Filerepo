@@ -12,5 +12,6 @@ namespace FileRepo
         public const string FacebookAppSecret = "db81811f1fccd4784a73c27c4b5033cf";
         public const string LoginRedirectUrl = "~/authentication/redirect/facebook";
         public const string DashboardPassword = "haslo";
+        public const string FileUploadDirectory = "Files";
     }
 }

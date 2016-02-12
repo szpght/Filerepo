@@ -1,0 +1,34 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+@{
+    Layout = "Views/layout.cshtml";
+}
+<form method="post" enctype="multipart/form-data">
+    <table class="table">
+        <tr>
+            <th>Subject</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>File</th>
+            <td>
+                <input type="file" name="File"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>
+                <textarea name="Description" class="form-control"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Notes</th>
+            <td>
+                <textarea name="Notes" class="form-control"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div class="btn-group">
+        <input type="submit" value="Upload" class="btn btn-default"/>
+        <a href="/repo/subject/@Model.Id" class="btn btn-default">Back</a>
+    </div>
+</form>

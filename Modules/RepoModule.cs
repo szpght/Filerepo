@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileRepo.Auth;
 using FileRepo.Model;
+using FileRepo.ViewModels;
 using Nancy;
 using Nancy.Security;
 using Microsoft.Data.Entity;
@@ -15,10 +18,14 @@ namespace FileRepo.Modules
     public class RepoModule : NancyModule
     {
         private readonly RepoContext db;
+        private readonly IRootPathProvider pathProvider;
+        private readonly UserMapper userMapper;
 
-        public RepoModule(RepoContext db) : base("/repo")
+        public RepoModule(RepoContext db, IRootPathProvider pathProvider, UserMapper userMapper) : base("/repo")
         {
             this.db = db;
+            this.pathProvider = pathProvider;
+            this.userMapper = userMapper;
 
             //this.RequiresClaims("user");
             Get["/"] = parameters =>
@@ -33,10 +40,31 @@ namespace FileRepo.Modules
             Get["/subject/{subject:int}"] = parameters =>
             {
                 int subject = parameters.subject;
-                var model = db.Items
+                var items = db.Items
                     .Include(x => x.User)
-                    .Where(x => x.SubjectId == subject);
-                return View["subject", model];
+                    .Where(x => x.SubjectId == subject)
+                    .ToList();
+                var viewModel = new SubjectViewModel
+                {
+                    SubjectId = subject,
+                    Items = items
+                };
+                return View["subject", viewModel];
+            };
+
+            Get["/subject/{id:int}/upload"] = parameters =>
+            {
+                int id = parameters.id;
+                var subject = db.Subjects.Single(x => x.Id == id);
+                return View["UploadFile", subject];
+            };
+
+            Post["/subject/{id:int}/upload"] = parameters =>
+            {
+                int subjectId = parameters.id;
+                SaveFile(subjectId, Request.Files);
+                string path = string.Format("/repo/subject/{0}", subjectId);
+                return Response.AsRedirect(path);
             };
 
             Get["/file/{id:int}"] = parameters =>
@@ -77,6 +105,13 @@ namespace FileRepo.Modules
                 string path = string.Format("/repo/subject/{0}", file.SubjectId);
                 return Response.AsRedirect(path);
             };
+
+            Get["/file/{id:int}/download"] = parameters =>
+            {
+                int id = parameters.id;
+                Item file = db.Items.Single(x => x.Id == id);
+                return Response.AsFile(file.StoredName);
+            };
         }
 
         public Item GetItemFromId(int id)
@@ -88,12 +123,40 @@ namespace FileRepo.Modules
             return file;
         }
 
+        private void SaveFile(int subjectId, IEnumerable<HttpFile> files)
+        {
+            var uploadDir = Path.Combine(pathProvider.GetRootPath(), Config.FileUploadDirectory);
+            Directory.CreateDirectory(uploadDir);
+            foreach (var file in files)
+            {
+                var fileName = Guid.NewGuid().ToString();
+                var filePath = Path.Combine(uploadDir, fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.Value.CopyTo(fileStream);
+                }
+                var itemFromRequest = this.Bind<Item>();
+                var item = new Item
+                {
+                    User = userMapper.GetUserFromFbId(Context.CurrentUser.UserName),
+                    DateAdded = DateTime.Now,
+                    Description = itemFromRequest.Description,
+                    Notes = itemFromRequest.Notes,
+                    Name = file.Name,
+                    StoredName = fileName,
+                    SubjectId = subjectId,
+                };
+                db.Items.Add(item);
+                db.SaveChanges();
+            }
+        }
+
         public static bool UserAllowedToEdit(NancyContext context, Item file)
         {
-            return true;
+            return true; // TODO 
             if (context.CurrentUser.UserName == file.User.UserName)
                 return true;
-            return context.CurrentUser.Claims.Contains("admin"); // TODO czy taki zapis to dobra praktyka?
+            return context.CurrentUser.Claims.Contains("admin"); // TODO good practice?
         }
     }
 }

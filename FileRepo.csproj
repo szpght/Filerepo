@@ -189,9 +189,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepoContext.cs" />
+    <Compile Include="ViewModels\SubjectViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.png" />
+    <Content Include="TODO.txt" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -218,6 +220,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\repo.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\UploadFile.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
