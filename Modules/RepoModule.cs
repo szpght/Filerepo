@@ -147,6 +147,7 @@ namespace FileRepo.Modules
                     Name = file.Name,
                     StoredName = fileName,
                     SubjectId = subjectId,
+                    Size = file.Value.Length
                 };
                 db.Items.Add(item);
                 db.SaveChanges();

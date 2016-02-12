@@ -19,5 +19,20 @@ namespace FileRepo.Model
         public string StoredName { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public long Size { get; set; }
+
+        private static string[] suffixes = { "B", "KiB", "MiB", "GiB" };
+        [NotMapped]
+        public string SizeHumanReadable
+        {
+            get
+            {
+                if (Size == 0)
+                    return "0 B";
+                int suffixIndex = (int)Math.Log(Size, 1024);
+                double normalizedSize = Size/Math.Pow(1024, suffixIndex);
+                return string.Format("{0:0.#} {1}", normalizedSize, suffixes[suffixIndex]);
+            }
+        }
     }
 }
