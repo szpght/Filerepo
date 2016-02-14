@@ -25,7 +25,7 @@ namespace FileRepo.Auth
             var user = userMapper.GetUserFromFbId(info.Id);
             if (user == null)
                 user = userMapper.RegisterUser(info);
-            return nancyModule.LoginAndRedirect(user.Guid);
+            return nancyModule.LoginAndRedirect(user.Guid, fallbackRedirectUrl: model.ReturnUrl);
         }
 
         // TODO
