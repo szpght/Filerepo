@@ -12,7 +12,10 @@ namespace FileRepo.Auth
     {
         public void Handle(HttpStatusCode statusCode, NancyContext context)
         {
-            throw new NotImplementedException();
+            if (statusCode == HttpStatusCode.Forbidden)
+                handleForbidden(context);
+            else if (statusCode == HttpStatusCode.Unauthorized)
+                handleUnauthorized(context);
         }
 
         public bool HandlesStatusCode(HttpStatusCode statusCode, NancyContext context)
@@ -20,6 +23,16 @@ namespace FileRepo.Auth
             if (statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.Unauthorized)
                 return true;
             return false;
+        }
+
+        private void handleUnauthorized(NancyContext context)
+        {
+            
+        }
+
+        private void handleForbidden(NancyContext context)
+        {
+            
         }
     }
 }
