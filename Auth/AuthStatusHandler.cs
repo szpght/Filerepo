@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Nancy;
 using Nancy.ErrorHandling;
+using Nancy.Responses;
 using Nancy.ViewEngines;
 
 namespace FileRepo.Auth
@@ -35,7 +36,8 @@ namespace FileRepo.Auth
 
         private void handleUnauthorized(NancyContext context)
         {
-            
+            var url = context.Request.Url;
+            context.Response = new RedirectResponse("test");
         }
 
         private void handleForbidden(NancyContext context)

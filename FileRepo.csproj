@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\AuthenticationCallbackProvider.cs" />
+    <Compile Include="Auth\AuthStatusHandler.cs" />
     <Compile Include="Auth\UserMapper.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config.cs" />
