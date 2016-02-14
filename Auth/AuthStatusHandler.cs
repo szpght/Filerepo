@@ -37,7 +37,8 @@ namespace FileRepo.Auth
         private void handleUnauthorized(NancyContext context)
         {
             var url = context.Request.Url;
-            context.Response = new RedirectResponse("test");
+            string authUrl = "/authentication/redirect/facebook?returnUrl=" + url;
+            context.Response = new RedirectResponse(authUrl);
         }
 
         private void handleForbidden(NancyContext context)
