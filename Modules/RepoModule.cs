@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Nancy;
 using Microsoft.Data.Entity;
+using Nancy.Security;
 
 namespace FileRepo.Modules
 {
@@ -8,6 +9,7 @@ namespace FileRepo.Modules
     {
         public RepoModule(RepoContext db) : base("/repo")
         {
+            this.RequiresClaims("user");
             Get["/"] = parameters =>
             {
                 ViewBag.Title = "test";

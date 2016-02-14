@@ -8,6 +8,7 @@ using Nancy;
 using Microsoft.Data.Entity;
 using FileRepo.ViewModels;
 using Nancy.ModelBinding;
+using Nancy.Security;
 
 namespace FileRepo.Modules
 {
@@ -22,6 +23,8 @@ namespace FileRepo.Modules
             this.db = db;
             this.pathProvider = pathProvider;
             this.userMapper = userMapper;
+
+            this.RequiresClaims("user");
 
             Get["/{subject:int}"] = parameters =>
             {

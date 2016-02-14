@@ -4,6 +4,7 @@ using FileRepo.Model;
 using Nancy;
 using Nancy.ModelBinding;
 using Microsoft.Data.Entity;
+using Nancy.Security;
 
 namespace FileRepo.Modules
 {
@@ -14,6 +15,8 @@ namespace FileRepo.Modules
         public FileModule(RepoContext db) : base("/repo/file")
         {
             this.db = db;
+
+            this.RequiresClaims("user");
 
             Get["/{id:int}"] = parameters =>
             {
