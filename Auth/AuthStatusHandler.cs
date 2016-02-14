@@ -5,11 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Nancy;
 using Nancy.ErrorHandling;
+using Nancy.ViewEngines;
 
 namespace FileRepo.Auth
 {
     public class AuthStatusHandler : IStatusCodeHandler
     {
+        private IViewRenderer viewRenderer;
+
+        public AuthStatusHandler(IViewRenderer viewRenderer)
+        {
+            this.viewRenderer = viewRenderer;
+        }
+
         public void Handle(HttpStatusCode statusCode, NancyContext context)
         {
             if (statusCode == HttpStatusCode.Forbidden)
