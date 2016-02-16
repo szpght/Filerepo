@@ -16,6 +16,7 @@ namespace FileRepo.Modules
         {
             this.db = db;
 
+            this.RequiresAuthentication();
             this.RequiresClaims("user");
 
             Get["/{id:int}"] = parameters =>

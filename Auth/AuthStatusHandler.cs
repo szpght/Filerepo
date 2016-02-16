@@ -43,7 +43,7 @@ namespace FileRepo.Auth
 
         private void handleForbidden(NancyContext context)
         {
-            
+            context.Response = viewRenderer.RenderView(context, "Forbidden").WithStatusCode(HttpStatusCode.Forbidden);
         }
     }
 }
