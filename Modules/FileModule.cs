@@ -15,8 +15,7 @@ namespace FileRepo.Modules
         public FileModule(RepoContext db) : base("/repo/file")
         {
             this.db = db;
-
-            this.RequiresAuthentication();
+            
             this.RequiresClaims("user");
 
             Get["/{id:int}"] = parameters =>

@@ -171,7 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\AuthenticationCallbackProvider.cs" />
-    <None Include="Auth\AuthStatusHandler.cs" />
+    <Compile Include="Auth\ForbiddenHandler.cs" />
     <Compile Include="Auth\UserMapper.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config.cs" />
@@ -213,7 +213,9 @@
     <None Include="Views\FileEdit.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\Forbidden.cshtml" />
+    <None Include="Views\Forbidden.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\index.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
