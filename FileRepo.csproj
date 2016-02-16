@@ -184,7 +184,6 @@
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Subject.cs" />
     <Compile Include="Model\Term.cs" />
-    <Compile Include="Model\UserStatus.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Modules\FileModule.cs" />
     <Compile Include="Modules\IndexModule.cs" />
